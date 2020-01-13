@@ -1,4 +1,4 @@
-package com.wojciszke.ryanair.data.model
+package com.wojciszke.ryanair.data.model.api
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

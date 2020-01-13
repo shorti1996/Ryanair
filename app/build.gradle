@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -22,6 +23,9 @@ android {
     }
 
     buildTypes {
+        buildTypes.each {
+            it.buildConfigField 'String', 'API_BASE_URL_STATIONS', '\"https://tripstest.ryanair.com/\"'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -54,4 +58,14 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     // GSon
     implementation "com.google.code.gson:gson:2.8.6"
+
+    // Dagger2
+    def dagger2_version = '2.25.4'
+    api "com.google.dagger:dagger:${dagger2_version}"
+    kapt "com.google.dagger:dagger-compiler:${dagger2_version}"
+    // Dagger2 Android
+    api "com.google.dagger:dagger-android:${dagger2_version}"
+    // if you use the support libraries
+    api "com.google.dagger:dagger-android-support:${dagger2_version}"
+    kapt "com.google.dagger:dagger-android-processor:${dagger2_version}"
 }

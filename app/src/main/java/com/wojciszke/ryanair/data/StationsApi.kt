@@ -1,9 +1,9 @@
 package com.wojciszke.ryanair.data
 
-import com.wojciszke.ryanair.data.model.Stations
+import com.wojciszke.ryanair.data.model.api.Stations
 import retrofit2.http.GET
 
-interface RyanairApi {
+interface StationsApi {
     @GET("static/stations.json")
     suspend fun getStations(): Stations
 }
