@@ -1,5 +1,6 @@
 package com.wojciszke.ryanair.viewmodel
 
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,10 +15,16 @@ class SearchFormViewModel : ViewModel() {
     private val destinationCode: LiveData<String> = destinationCodeMutable
 
     private val flightDateMutable = MutableLiveData<String>()
+    private val adultsCountMutable = MutableLiveData<String>()
+    private val teensCountMutable = MutableLiveData<String>()
+    private val childrenCountMutable = MutableLiveData<String>()
 
     val canTriggerSearch: MediatorLiveData<Boolean> = ViewModelExtensions.createMediatorLiveDataForSources(
             originCode,
             destinationCode,
+            adultsCountMutable,
+            teensCountMutable,
+            childrenCountMutable,
             initialValue = false,
             calculate = ::calculateCanTriggerSearch
     )
@@ -34,8 +41,36 @@ class SearchFormViewModel : ViewModel() {
         flightDateMutable.value = dateString
     }
 
+    fun onAdultsChanged(count: String?) {
+        if (isCountStringValid(count)) {
+            adultsCountMutable.value = count
+        }
+    }
 
-    private fun calculateCanTriggerSearch() = originCode.value != null && destinationCode.value != null && isDateValid()
-    // TODO do it properly 🙃
+    fun onTeensChanged(count: String?) {
+        if (isCountStringValid(count)) {
+            teensCountMutable.value = count
+        }
+    }
+
+    fun onChildrenChanged(count: String?) {
+        if (isCountStringValid(count)) {
+            childrenCountMutable.value = count
+        }
+    }
+
+    private fun calculateCanTriggerSearch() = originCode.value != null
+            && destinationCode.value != null
+            && isDateValid()
+            && isPassengerCountValid()
+
+    // TODO do it properly (every validation here is a joke) 🙃
     private fun isDateValid() = flightDateMutable.value?.matches(Regex("^\\d{8}\$")) ?: false
+
+    private fun isPassengerCountValid() = adultsCountMutable.value?.toInt()
+            ?.plus(teensCountMutable.value?.toInt() ?: 0)
+            ?.plus(childrenCountMutable.value?.toInt() ?: 0)?.let { it > 0 } ?: false
+
+    private fun isCountStringValid(count: String?) = count?.isDigitsOnly()
+            ?.and(!count.isNullOrEmpty()) ?: false
 }
