@@ -30,7 +30,7 @@ class StationsViewModel(private val stationsRepository: StationsRepository) : Vi
 }
 
 @Suppress("UNCHECKED_CAST")
-class FlightSearchViewModelFactory(private val stationsRepository: StationsRepository) :
+class StationsViewModelFactory(private val stationsRepository: StationsRepository) :
         ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(StationsViewModel::class.java)) {

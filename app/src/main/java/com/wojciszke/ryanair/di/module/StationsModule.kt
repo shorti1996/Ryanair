@@ -6,6 +6,8 @@ import com.wojciszke.ryanair.data.StationsApi
 import com.wojciszke.ryanair.data.StationsRepository
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
@@ -23,6 +25,10 @@ class StationsModule {
     fun provideRetrofit(gson: Gson): Retrofit = Retrofit.Builder()
             .baseUrl(BuildConfig.API_BASE_URL_STATIONS)
             .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(
+                    OkHttpClient().newBuilder()
+                            .addInterceptor(HttpLoggingInterceptor().also { it.level = HttpLoggingInterceptor.Level.BODY })
+                            .build())
             .build()
 
     @Singleton
@@ -33,7 +39,7 @@ class StationsModule {
     @Provides
     fun provideStationsRepository(stationsApi: StationsApi): StationsRepository = StationsRepository(stationsApi)
 
-    companion object{
+    companion object {
         const val RETROFIT_NAME = "STATIONS_RETROFIT"
     }
 }

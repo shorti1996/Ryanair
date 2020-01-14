@@ -25,7 +25,7 @@ class SearchFormViewModel : ViewModel() {
             adultsCountMutable,
             teensCountMutable,
             childrenCountMutable,
-            initialValue = false,
+            initialValue = true /* debug */,
             calculate = ::calculateCanTriggerSearch
     )
 

@@ -23,7 +23,7 @@ class FlightsModule {
 
     @Singleton
     @Provides
-    fun provideFlightsApi(retrofit: Retrofit): FlightsApi = retrofit.create(FlightsApi::class.java)
+    fun provideFlightsApi(@Named(RETROFIT_NAME) retrofit: Retrofit): FlightsApi = retrofit.create(FlightsApi::class.java)
 
     @Singleton
     @Provides

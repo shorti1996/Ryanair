@@ -52,8 +52,8 @@ class SearchFormFragment : Fragment() {
             ArrayAdapter<StationAutocomplete>(requireContext(), android.R.layout.simple_dropdown_item_1line, mutableListOf())
 
     private fun prepareViewModels() {
-        stationsViewModel = ViewModelProviders.of(this, FlightSearchViewModelFactory(stationsRepository))[StationsViewModel::class.java]
-        searchFormViewModel = ViewModelProviders.of(this)[SearchFormViewModel::class.java]
+        stationsViewModel = ViewModelProviders.of(this, StationsViewModelFactory(stationsRepository))[StationsViewModel::class.java]
+        searchFormViewModel = ViewModelProviders.of(activity!!)[SearchFormViewModel::class.java]
 
         with(stationsViewModel) {
             stations.observe(this@SearchFormFragment) { stations -> onStationsChanged(stations) }

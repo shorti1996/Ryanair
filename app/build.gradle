@@ -54,10 +54,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     //    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
-    // Retrofit
+    // Retrofit2
     def retrofit_version = "2.7.1"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    // OKHttp3
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
     // GSon
     implementation "com.google.code.gson:gson:2.8.6"
 
