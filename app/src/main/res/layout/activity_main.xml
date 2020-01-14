@@ -6,18 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4" />
+
     <Button
         android:id="@+id/button_search_flights"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="Let's fly"
         app:layout_constraintEnd_toEndOf="@+id/text_view_flight_destination"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_flight_destination" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_children" />
 
     <AutoCompleteTextView
         android:id="@+id/text_view_flight_origin"
         android:hint="Origin station"
+        android:singleLine="true"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -30,6 +38,7 @@
     <AutoCompleteTextView
         android:id="@+id/text_view_flight_destination"
         android:hint="Destination station"
+        android:singleLine="true"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -39,5 +48,84 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_flight_origin" />
+
+    <EditText
+        android:id="@+id/edit_text_adults"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="1"
+        app:layout_constraintEnd_toEndOf="@+id/text_view_flight_destination"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_flight_date" />
+
+    <EditText
+        android:id="@+id/edit_text_teens"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="0"
+        app:layout_constraintEnd_toEndOf="@+id/text_view_flight_destination"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_adults" />
+
+    <EditText
+        android:id="@+id/edit_text_children"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="0"
+        app:layout_constraintEnd_toEndOf="@+id/text_view_flight_destination"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_teens" />
+
+    <TextView
+        android:id="@+id/adults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adults"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_text_adults"
+        app:layout_constraintStart_toStartOf="@+id/text_view_flight_destination" />
+
+    <TextView
+        android:id="@+id/teens"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Teens"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_text_teens"
+        app:layout_constraintStart_toStartOf="@+id/text_view_flight_destination" />
+
+    <TextView
+        android:id="@+id/children"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Children"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_text_children"
+        app:layout_constraintStart_toStartOf="@+id/text_view_flight_destination" />
+
+    <EditText
+        android:id="@+id/edit_text_flight_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:hint="Departure date (YYYYMMDD)"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_flight_destination" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

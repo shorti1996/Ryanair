@@ -25,3 +25,4 @@ data class Flights(
         @Expose
         val serverTimeUTC: String? = null
 )
+
