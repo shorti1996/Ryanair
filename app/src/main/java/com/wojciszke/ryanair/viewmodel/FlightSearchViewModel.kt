@@ -2,7 +2,7 @@ package com.wojciszke.ryanair.viewmodel
 
 import androidx.lifecycle.*
 import com.wojciszke.ryanair.data.StationsRepository
-import com.wojciszke.ryanair.data.model.api.Stations
+import com.wojciszke.ryanair.data.model.stations.Stations
 import com.wojciszke.ryanair.utils.ViewModelExtensions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

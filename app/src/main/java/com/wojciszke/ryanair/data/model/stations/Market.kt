@@ -1,4 +1,4 @@
-package com.wojciszke.ryanair.data.model.api
+package com.wojciszke.ryanair.data.model.stations
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -7,9 +7,9 @@ import com.google.gson.annotations.SerializedName
 data class Market(
     @SerializedName("code")
     @Expose
-    var code: String? = null,
+    val code: String? = null,
 
     @SerializedName("group")
     @Expose
-    var group: Any? = null
+    val group: Any? = null
 )

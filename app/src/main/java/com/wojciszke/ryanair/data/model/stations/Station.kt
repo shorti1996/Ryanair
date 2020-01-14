@@ -1,72 +1,71 @@
-package com.wojciszke.ryanair.data.model.api
+package com.wojciszke.ryanair.data.model.stations
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.wojciszke.ryanair.data.model.api.Market
 
 
 data class Station(
     @SerializedName("code")
     @Expose
-    var code: String? = null,
+    val code: String? = null,
 
     @SerializedName("name")
     @Expose
-    var name: String? = null,
+    val name: String? = null,
 
     @SerializedName("alternateName")
     @Expose
-    var alternateName: Any? = null,
+    val alternateName: Any? = null,
 
     @SerializedName("alias")
     @Expose
-    var alias: List<String>? = null,
+    val alias: List<String>? = null,
 
     @SerializedName("countryCode")
     @Expose
-    var countryCode: String? = null,
+    val countryCode: String? = null,
 
     @SerializedName("countryName")
     @Expose
-    var countryName: String? = null,
+    val countryName: String? = null,
 
     @SerializedName("countryAlias")
     @Expose
-    var countryAlias: Any? = null,
+    val countryAlias: Any? = null,
 
     @SerializedName("countryGroupCode")
     @Expose
-    var countryGroupCode: String? = null,
+    val countryGroupCode: String? = null,
 
     @SerializedName("countryGroupName")
     @Expose
-    var countryGroupName: String? = null,
+    val countryGroupName: String? = null,
 
     @SerializedName("timeZoneCode")
     @Expose
-    var timeZoneCode: String? = null,
+    val timeZoneCode: String? = null,
 
     @SerializedName("latitude")
     @Expose
-    var latitude: String? = null,
+    val latitude: String? = null,
 
     @SerializedName("longitude")
     @Expose
-    var longitude: String? = null,
+    val longitude: String? = null,
 
     @SerializedName("mobileBoardingPass")
     @Expose
-    var mobileBoardingPass: Boolean? = null,
+    val mobileBoardingPass: Boolean? = null,
 
     @SerializedName("markets")
     @Expose
-    var markets: List<Market>? = null,
+    val markets: List<Market>? = null,
 
     @SerializedName("notices")
     @Expose
-    var notices: Any? = null,
+    val notices: Any? = null,
 
     @SerializedName("tripCardImageUrl")
     @Expose
-    var tripCardImageUrl: String? = null
+    val tripCardImageUrl: String? = null
 )

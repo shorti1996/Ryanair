@@ -1,6 +1,6 @@
 package com.wojciszke.ryanair.data
 
-import com.wojciszke.ryanair.data.model.api.Stations
+import com.wojciszke.ryanair.data.model.stations.Stations
 import retrofit2.http.GET
 
 interface StationsApi {

@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.wojciszke.ryanair.data.StationsRepository
-import com.wojciszke.ryanair.data.model.api.Stations
+import com.wojciszke.ryanair.data.model.stations.Stations
 import com.wojciszke.ryanair.data.model.app.StationAutocomplete
 import com.wojciszke.ryanair.data.model.app.toStationAutocomplete
 import com.wojciszke.ryanair.di.component.DaggerSearchFlightsComponent
