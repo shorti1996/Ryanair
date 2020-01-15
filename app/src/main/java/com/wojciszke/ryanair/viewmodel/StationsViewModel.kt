@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.wojciszke.networking.NetworkFail
 import com.wojciszke.networking.NetworkSuccess
 import com.wojciszke.ryanair.repository.StationsRepository
-import com.wojciszke.ryanair.utils.NETWORKING_TAG
+import com.wojciszke.ryanair.utils.NETWORKING_LOG_TAG
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -29,7 +29,7 @@ class StationsViewModel(private val stationsRepository: StationsRepository) : Vi
         ioScope.launch {
             when (val result = stationsRepository.getStations()) {
                 is NetworkSuccess<*> -> stationsMutable.postValue(result.obj as com.wojciszke.core.model.stations.Stations?)
-                is NetworkFail -> Log.e(NETWORKING_TAG, result.message)
+                is NetworkFail -> Log.e(NETWORKING_LOG_TAG, result.message)
             }
         }
     }

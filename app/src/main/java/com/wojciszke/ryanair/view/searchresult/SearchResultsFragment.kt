@@ -14,6 +14,7 @@ import com.wojciszke.ryanair.model.SearchFormData
 import com.wojciszke.ryanair.model.SearchResult
 import com.wojciszke.ryanair.repository.FlightsRepository
 import com.wojciszke.ryanair.utils.observe
+import com.wojciszke.ryanair.utils.setActionBarTitleOrDefault
 import com.wojciszke.ryanair.viewmodel.FlightDetails
 import com.wojciszke.ryanair.viewmodel.MainViewModel
 import com.wojciszke.ryanair.viewmodel.SearchResultsViewModel
@@ -35,6 +36,11 @@ class SearchResultsFragment : Fragment() {
         DaggerSearchFlightsComponent.create().inject(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        searchResultsViewModel.onFocusedFlightChanged(null)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_search_results, container, false)
 
@@ -48,16 +54,9 @@ class SearchResultsFragment : Fragment() {
         prepareViewModels()
     }
 
-    private fun prepareViewModels() {
-        searchResultsViewModel = ViewModelProviders.of(activity!!, SearchResultsViewModelFactory(flightsRepository))[SearchResultsViewModel::class.java]
-        searchResultsViewModel.searchResults.observe(this) {
-            searchResultAdapter.setData(it)
-        }
-        searchResultsViewModel.onSearchFormChanged(arguments?.getParcelable(SEARCH_FORM_DATA_KEY))
-    }
-
     override fun onDetach() {
         searchResultsViewModel.onSearchFormChanged(null)
+        setActionBarTitle(null)
         super.onDetach()
     }
 
@@ -65,6 +64,35 @@ class SearchResultsFragment : Fragment() {
         mainViewModel.onCurrentScreenChanged(FlightDetails(searchResult))
         searchResultsViewModel.onFocusedFlightChanged(searchResult)
     }
+
+    private fun prepareViewModels() {
+        searchResultsViewModel = ViewModelProviders.of(activity!!, SearchResultsViewModelFactory(flightsRepository))[SearchResultsViewModel::class.java]
+        with(searchResultsViewModel) {
+            searchResults.observe(this@SearchResultsFragment) {
+                updateProgressBar(it)
+                searchResultAdapter.setData(it)
+            }
+            originName.observe(this@SearchResultsFragment) {
+                setActionBarTitle(origin = it)
+            }
+            destinationName.observe(this@SearchResultsFragment) {
+                setActionBarTitle(destination = it)
+            }
+            onSearchFormChanged(arguments?.getParcelable(SEARCH_FORM_DATA_KEY))
+        }
+    }
+
+    private fun updateProgressBar(it: List<SearchResult>?) {
+        progress_bar_search_flights.visibility = if (it == null) View.VISIBLE else View.GONE
+    }
+
+    private fun setActionBarTitle(
+            origin: String? = searchResultsViewModel.originName.value,
+            destination: String? = searchResultsViewModel.destinationName.value) {
+        requireActivity().setActionBarTitleOrDefault(if (origin != null && destination != null) prepareActionBarTitle(origin, destination) else null)
+    }
+
+    private fun prepareActionBarTitle(origin: String, destination: String) = "$origin -> $destination"
 
     companion object {
         const val TAG = "search-results-fragment-tag"

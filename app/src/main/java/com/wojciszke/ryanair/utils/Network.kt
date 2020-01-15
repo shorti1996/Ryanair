@@ -6,7 +6,7 @@ import android.net.Network
 import android.net.NetworkRequest
 
 
-const val NETWORKING_TAG = "networking"
+const val NETWORKING_LOG_TAG = "networking"
 
 fun Context.registerOnNetworkAvailableCallback(block: (Network) -> Unit): ConnectivityManager.NetworkCallback? =
         object : ConnectivityManager.NetworkCallback() {

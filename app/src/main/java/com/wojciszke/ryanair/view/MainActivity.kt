@@ -8,6 +8,7 @@ import com.wojciszke.ryanair.model.SearchFormData
 import com.wojciszke.ryanair.model.SearchResult
 import com.wojciszke.ryanair.utils.inTransaction
 import com.wojciszke.ryanair.utils.observe
+import com.wojciszke.ryanair.utils.setActionBarTitleOrDefault
 import com.wojciszke.ryanair.view.flightdetails.FlightDetailsFragment
 import com.wojciszke.ryanair.view.searchform.SearchFormFragment
 import com.wojciszke.ryanair.view.searchresult.SearchResultsFragment
@@ -36,14 +37,9 @@ class MainActivity : AppCompatActivity() {
         setupChildFragmentPopListener()
     }
 
-    private fun setActionBarTitle(title: String?) {
-        if (title == null) setTitle(getString(R.string.app_name))
-        else setTitle(title)
-    }
-
     private fun setupChildFragmentPopListener() {
         supportFragmentManager.addOnBackStackChangedListener {
-            if (supportFragmentManager.backStackEntryCount == 0) setActionBarTitle(null)
+            if (supportFragmentManager.backStackEntryCount == 0) setActionBarTitleOrDefault(null)
         }
     }
 
@@ -53,7 +49,6 @@ class MainActivity : AppCompatActivity() {
                     findFragmentByTag(SearchFormFragment.TAG) ?: SearchFormFragment(),
                     SearchFormFragment.TAG)
         }
-        setActionBarTitle(null)
     }
 
     private fun showSearchResults(searchFormData: SearchFormData) = supportFragmentManager.apply {
@@ -63,7 +58,6 @@ class MainActivity : AppCompatActivity() {
                     SearchResultsFragment.TAG)
             addToBackStack(null)
         }
-        setActionBarTitle("${searchFormData.origin} -> ${searchFormData.destination}")
     }
 
     private fun showFlightDetails(searchResult: SearchResult) = supportFragmentManager.apply {

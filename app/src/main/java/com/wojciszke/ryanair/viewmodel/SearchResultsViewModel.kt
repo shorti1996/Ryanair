@@ -1,10 +1,14 @@
 package com.wojciszke.ryanair.viewmodel
 
-import androidx.lifecycle.*
-import com.wojciszke.ryanair.repository.FlightsRepository
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.wojciszke.core.model.flights.FlightsAvailability
 import com.wojciszke.ryanair.model.SearchFormData
 import com.wojciszke.ryanair.model.SearchResult
 import com.wojciszke.ryanair.model.fromFlights
+import com.wojciszke.ryanair.repository.FlightsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -16,13 +20,21 @@ class SearchResultsViewModel(private val flightsRepository: FlightsRepository) :
     private val viewModelJob = SupervisorJob()
     private val ioScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
-    private val availabilityMutable = MutableLiveData<com.wojciszke.core.model.flights.FlightsAvailability?>()
+    private val availabilityMutable = MutableLiveData<FlightsAvailability?>()
 
     val searchResults = Transformations.map(availabilityMutable) {
         it?.let { fromFlights(it) }
     }
 
     private val focusedFlightMutable = MutableLiveData<SearchResult>()
+
+    val originName = Transformations.map(focusedFlightMutable) {
+        it?.originName
+    }
+
+    val destinationName = Transformations.map(focusedFlightMutable) {
+        it?.destinationName
+    }
 
     fun onSearchFormChanged(searchFormData: SearchFormData?) {
         if (searchFormData != null) {
@@ -40,7 +52,7 @@ class SearchResultsViewModel(private val flightsRepository: FlightsRepository) :
         }
     }
 
-    fun onFocusedFlightChanged(searchResult: SearchResult) {
+    fun onFocusedFlightChanged(searchResult: SearchResult?) {
         focusedFlightMutable.value = searchResult
     }
 
