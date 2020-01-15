@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-data class Flights(
+data class FlightsAvailability(
         @SerializedName("termsOfUse")
         @Expose
         val termsOfUse: String? = null,

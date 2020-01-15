@@ -11,5 +11,5 @@ data class FlightDate(
 
         @SerializedName("flights")
         @Expose
-        val flights: List<Any>? = null
+        val flights: List<Flight>? = null
 )

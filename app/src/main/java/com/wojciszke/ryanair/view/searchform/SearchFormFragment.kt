@@ -1,4 +1,4 @@
-package com.wojciszke.ryanair
+package com.wojciszke.ryanair.view.searchform
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.wojciszke.ryanair.R
 import com.wojciszke.ryanair.data.StationsRepository
 import com.wojciszke.ryanair.data.model.app.StationAutocomplete
 import com.wojciszke.ryanair.data.model.app.toStationAutocomplete

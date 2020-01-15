@@ -1,7 +1,7 @@
 package com.wojciszke.ryanair.di.component
 
-import com.wojciszke.ryanair.SearchFormFragment
-import com.wojciszke.ryanair.SearchResultsFragment
+import com.wojciszke.ryanair.view.searchform.SearchFormFragment
+import com.wojciszke.ryanair.view.searchresult.SearchResultsFragment
 import com.wojciszke.ryanair.data.StationsRepository
 import com.wojciszke.ryanair.di.module.RyanairRepositioryModule
 import dagger.Component

@@ -1,7 +1,6 @@
 package com.wojciszke.ryanair.data
 
-import android.telecom.Call
-import com.wojciszke.ryanair.data.model.flights.Flights
+import com.wojciszke.ryanair.data.model.flights.FlightsAvailability
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -16,7 +15,7 @@ interface FlightsApi {
         @Query("chd") children: Int,
         @Query("roundtrip") roundTrip: Boolean = true,
         @Query("ToUs") toUs: String = "AGREED"
-    ): Flights
+    ): FlightsAvailability
 
 //    @GET("Availability")
 //    fun getFlights2(

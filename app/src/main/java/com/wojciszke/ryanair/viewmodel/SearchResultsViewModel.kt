@@ -1,11 +1,9 @@
 package com.wojciszke.ryanair.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.wojciszke.ryanair.data.FlightsRepository
-import com.wojciszke.ryanair.data.model.flights.Flights
+import com.wojciszke.ryanair.data.model.app.fromFlights
+import com.wojciszke.ryanair.data.model.flights.FlightsAvailability
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -17,8 +15,8 @@ class SearchResultsViewModel(private val flightsRepository: FlightsRepository) :
     private val viewModelJob = SupervisorJob()
     private val ioScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
-    private val flightSearchResultMutable: MutableLiveData<Flights?> by lazy {
-        MutableLiveData<Flights?>().apply {
+    private val availabilityMutable: MutableLiveData<FlightsAvailability?> by lazy {
+        MutableLiveData<FlightsAvailability?>().apply {
             ioScope.launch {
                 postValue(flightsRepository.getFlights(
                         "SXF",
@@ -30,7 +28,11 @@ class SearchResultsViewModel(private val flightsRepository: FlightsRepository) :
             }
         }
     }
-    val stations: LiveData<Flights?> = flightSearchResultMutable
+    val availability: LiveData<FlightsAvailability?> = availabilityMutable
+
+    val searchResults = Transformations.map(availability) {
+        it?.let { fromFlights(it) }
+    }
 
     override fun onCleared() {
         super.onCleared()
