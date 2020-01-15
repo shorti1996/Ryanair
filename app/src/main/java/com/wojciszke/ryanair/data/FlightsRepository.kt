@@ -1,9 +1,11 @@
 package com.wojciszke.ryanair.data
 
 import android.util.Log
-import retrofit2.http.Query
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class FlightsRepository(private val flightsApi: FlightsApi) {
+@Singleton
+class FlightsRepository @Inject constructor(private val flightsApi: FlightsApi) {
     suspend fun getFlights(origin: String,
                            destination: String,
                            dateout: String,

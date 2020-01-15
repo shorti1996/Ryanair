@@ -18,14 +18,12 @@ class SearchResultsViewModel(private val flightsRepository: FlightsRepository) :
     private val ioScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
     private val availabilityMutable = MutableLiveData<FlightsAvailability?>()
-    val availability: LiveData<FlightsAvailability?> = availabilityMutable
 
-    val searchResults = Transformations.map(availability) {
+    val searchResults = Transformations.map(availabilityMutable) {
         it?.let { fromFlights(it) }
     }
 
     private val focusedFlightMutable = MutableLiveData<SearchResult>()
-    val focusedFlight: LiveData<SearchResult> = focusedFlightMutable
 
     fun onSearchFormChanged(searchFormData: SearchFormData?) {
         if (searchFormData != null) {
