@@ -1,9 +1,7 @@
 package com.wojciszke.ryanair.di.module
 
-import com.google.gson.Gson
 import com.wojciszke.ryanair.BuildConfig
-import com.wojciszke.ryanair.data.FlightsApi
-import com.wojciszke.ryanair.data.FlightsRepository
+import com.wojciszke.ryanair.networking.FlightsApi
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

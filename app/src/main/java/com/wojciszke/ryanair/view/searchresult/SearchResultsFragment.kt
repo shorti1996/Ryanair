@@ -2,7 +2,6 @@ package com.wojciszke.ryanair.view.searchresult
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wojciszke.ryanair.R
-import com.wojciszke.ryanair.data.FlightsRepository
+import com.wojciszke.ryanair.networking.FlightsRepository
 import com.wojciszke.ryanair.data.model.app.SearchFormData
 import com.wojciszke.ryanair.data.model.app.SearchResult
 import com.wojciszke.ryanair.di.component.DaggerSearchFlightsComponent

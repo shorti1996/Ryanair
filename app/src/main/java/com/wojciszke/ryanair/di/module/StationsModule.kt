@@ -1,7 +1,7 @@
 package com.wojciszke.ryanair.di.module
 
 import com.wojciszke.ryanair.BuildConfig
-import com.wojciszke.ryanair.data.StationsApi
+import com.wojciszke.ryanair.networking.StationsApi
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

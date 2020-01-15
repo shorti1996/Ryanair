@@ -1,5 +1,6 @@
 package com.wojciszke.ryanair.view.searchform
 
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,12 +12,14 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.wojciszke.ryanair.R
-import com.wojciszke.ryanair.data.StationsRepository
 import com.wojciszke.ryanair.data.model.app.StationAutocomplete
 import com.wojciszke.ryanair.data.model.app.toStationAutocomplete
 import com.wojciszke.ryanair.data.model.stations.Stations
 import com.wojciszke.ryanair.di.component.DaggerSearchFlightsComponent
+import com.wojciszke.ryanair.networking.StationsRepository
 import com.wojciszke.ryanair.utils.observe
+import com.wojciszke.ryanair.utils.registerOnNetworkAvailableCallback
+import com.wojciszke.ryanair.utils.unregisterOnNetworkAvailableCallback
 import com.wojciszke.ryanair.viewmodel.*
 import kotlinx.android.synthetic.main.fragment_search_form.*
 import kotlinx.android.synthetic.main.fragment_search_form.view.*
@@ -34,6 +37,8 @@ class SearchFormFragment : Fragment() {
     private val autocompleteDestinationAdapter by lazy { createEmptyArrayAdapter() }
     private val multiAutocomplete by lazy { listOf(autocompleteOriginAdapter, autocompleteDestinationAdapter) }
 
+    private var networkCallback: ConnectivityManager.NetworkCallback? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_search_form, container, false).apply {
                 this.edit_text_flight_date.addTextChangedListener { editable -> searchFormViewModel.onDateChanged(editable?.toString()) }
@@ -48,6 +53,14 @@ class SearchFormFragment : Fragment() {
 
         prepareViewModels()
         prepareAutocompleteTextViews()
+        requireContext().registerOnNetworkAvailableCallback {
+            stationsViewModel.reloadStations()
+        }?.let { networkCallback = it }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        networkCallback?.let { requireContext().unregisterOnNetworkAvailableCallback(it) }
     }
 
     private fun createEmptyArrayAdapter() =

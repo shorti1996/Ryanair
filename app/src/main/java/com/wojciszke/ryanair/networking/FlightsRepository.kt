@@ -1,4 +1,4 @@
-package com.wojciszke.ryanair.data
+package com.wojciszke.ryanair.networking
 
 import android.util.Log
 import javax.inject.Inject

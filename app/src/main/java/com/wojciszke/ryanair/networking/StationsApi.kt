@@ -1,4 +1,4 @@
-package com.wojciszke.ryanair.data
+package com.wojciszke.ryanair.networking
 
 import com.wojciszke.ryanair.data.model.stations.Stations
 import retrofit2.http.GET

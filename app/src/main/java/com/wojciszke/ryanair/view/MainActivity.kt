@@ -1,5 +1,10 @@
 package com.wojciszke.ryanair.view
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkInfo
+import android.net.NetworkRequest
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders

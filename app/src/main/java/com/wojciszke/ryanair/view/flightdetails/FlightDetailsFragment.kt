@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.wojciszke.ryanair.R
-import com.wojciszke.ryanair.data.FlightsRepository
+import com.wojciszke.ryanair.networking.FlightsRepository
 import com.wojciszke.ryanair.data.model.app.SearchResult
 import com.wojciszke.ryanair.di.component.DaggerSearchFlightsComponent
 import kotlinx.android.synthetic.main.fragment_flight_details.*

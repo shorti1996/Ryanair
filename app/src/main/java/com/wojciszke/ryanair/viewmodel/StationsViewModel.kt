@@ -1,9 +1,12 @@
 package com.wojciszke.ryanair.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
-import com.wojciszke.ryanair.data.StationsRepository
+import com.wojciszke.ryanair.networking.StationsRepository
 import com.wojciszke.ryanair.data.model.stations.Stations
-import com.wojciszke.ryanair.utils.ViewModelExtensions
+import com.wojciszke.ryanair.utils.NETWORKING_TAG
+import com.wojciszke.ryanair.utils.NetworkFail
+import com.wojciszke.ryanair.utils.NetworkSuccess
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -17,10 +20,18 @@ class StationsViewModel(private val stationsRepository: StationsRepository) : Vi
     private val ioScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
     private val stationsMutable: MutableLiveData<Stations?> = MutableLiveData<Stations?>().apply {
+        reloadStations()
+    }
+
+    fun reloadStations() {
         ioScope.launch {
-            postValue(stationsRepository.getStations())
+            when (val result = stationsRepository.getStations()) {
+                is NetworkSuccess<*> -> stationsMutable.postValue(result.obj as Stations?)
+                is NetworkFail -> Log.e(NETWORKING_TAG, result.message)
+            }
         }
     }
+
     val stations: LiveData<Stations?> = stationsMutable
 
     override fun onCleared() {
