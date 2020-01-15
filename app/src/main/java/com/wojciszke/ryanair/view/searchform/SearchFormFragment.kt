@@ -1,6 +1,7 @@
 package com.wojciszke.ryanair.view.searchform
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,6 +61,7 @@ class SearchFormFragment : Fragment() {
             stations.observe(this@SearchFormFragment) { stations -> onStationsChanged(stations) }
         }
         with(searchFormViewModel) {
+            searchFormData.observe(this@SearchFormFragment) { Log.d(TAG, it.toString()) }
             canTriggerSearch.observe(this@SearchFormFragment) { canTriggerSearch -> onCanTriggerSearchChanged(canTriggerSearch) }
         }
 
@@ -77,7 +79,7 @@ class SearchFormFragment : Fragment() {
     private fun onCanTriggerSearchChanged(canTriggerSearch: Boolean) {
         if (canTriggerSearch) button_search_flights.setOnClickListener {
             Toast.makeText(requireContext(), "OK", Toast.LENGTH_SHORT).show()
-            mainViewModel.onCurrentScreenChanged(CurrentScreen.SEARCH_RESULTS)
+            mainViewModel.onCurrentScreenChanged(SearchResults(searchFormViewModel.searchFormData.value!!))
         }
         else button_search_flights.setOnClickListener { Toast.makeText(requireContext(), "Please, fill the form", Toast.LENGTH_SHORT).show() }
     }

@@ -4,6 +4,7 @@ import com.wojciszke.ryanair.view.searchform.SearchFormFragment
 import com.wojciszke.ryanair.view.searchresult.SearchResultsFragment
 import com.wojciszke.ryanair.data.StationsRepository
 import com.wojciszke.ryanair.di.module.RyanairRepositioryModule
+import com.wojciszke.ryanair.view.flightdetails.FlightDetailsFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -12,6 +13,7 @@ import javax.inject.Singleton
 interface SearchFlightsComponent {
     fun inject(searchFormFragment: SearchFormFragment)
     fun inject(searchResultsFragment: SearchResultsFragment)
+    fun inject(flightDetailsFragment: FlightDetailsFragment)
 
     val stationsRepository: StationsRepository
 }

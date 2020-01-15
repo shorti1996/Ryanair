@@ -2,6 +2,8 @@ package com.wojciszke.ryanair.viewmodel
 
 import androidx.lifecycle.*
 import com.wojciszke.ryanair.data.FlightsRepository
+import com.wojciszke.ryanair.data.model.app.SearchFormData
+import com.wojciszke.ryanair.data.model.app.SearchResult
 import com.wojciszke.ryanair.data.model.app.fromFlights
 import com.wojciszke.ryanair.data.model.flights.FlightsAvailability
 import kotlinx.coroutines.CoroutineScope
@@ -15,23 +17,28 @@ class SearchResultsViewModel(private val flightsRepository: FlightsRepository) :
     private val viewModelJob = SupervisorJob()
     private val ioScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
-    private val availabilityMutable: MutableLiveData<FlightsAvailability?> by lazy {
-        MutableLiveData<FlightsAvailability?>().apply {
-            ioScope.launch {
-                postValue(flightsRepository.getFlights(
-                        "SXF",
-                        "LIS",
-                        "2020-02-20",
-                        1,
-                        0,
-                        0))
-            }
-        }
-    }
+    private val availabilityMutable = MutableLiveData<FlightsAvailability?>()
     val availability: LiveData<FlightsAvailability?> = availabilityMutable
 
     val searchResults = Transformations.map(availability) {
         it?.let { fromFlights(it) }
+    }
+
+    private val focusedFlightMutable = MutableLiveData<SearchResult>()
+    val focusedFlight: LiveData<SearchResult> = focusedFlightMutable
+
+    fun onSearchFormChanged(searchFormData: SearchFormData) = ioScope.launch {
+        availabilityMutable.postValue(flightsRepository.getFlights(
+                searchFormData.origin,
+                searchFormData.destination,
+                searchFormData.dateOut,
+                searchFormData.adults,
+                searchFormData.teens,
+                searchFormData.children))
+    }
+
+    fun onFocusedFlightChanged(searchResult: SearchResult) {
+        focusedFlightMutable.value = searchResult
     }
 
     override fun onCleared() {

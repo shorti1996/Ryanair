@@ -1,10 +1,8 @@
 package com.wojciszke.ryanair.viewmodel
 
 import androidx.core.text.isDigitsOnly
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.wojciszke.ryanair.data.model.app.SearchFormData
 import com.wojciszke.ryanair.utils.ViewModelExtensions
 
 class SearchFormViewModel : ViewModel() {
@@ -22,12 +20,26 @@ class SearchFormViewModel : ViewModel() {
     val canTriggerSearch: MediatorLiveData<Boolean> = ViewModelExtensions.createMediatorLiveDataForSources(
             originCode,
             destinationCode,
+            flightDateMutable,
             adultsCountMutable,
             teensCountMutable,
             childrenCountMutable,
-            initialValue = true /* debug */,
+            initialValue = false,
             calculate = ::calculateCanTriggerSearch
     )
+
+    val searchFormData: LiveData<SearchFormData?> = Transformations.map(canTriggerSearch) {
+        if (it == true) {
+            SearchFormData(
+                    originCode.value ?: "",
+                    destinationCode.value ?: "",
+                    flightDateMutable.value ?: "",
+                    adultsCountMutable.value?.toInt() ?: 0,
+                    teensCountMutable.value?.toInt() ?: 0,
+                    childrenCountMutable.value?.toInt() ?: 0
+            )
+        } else null
+    }
 
     fun onOriginSelected(stationCode: String) {
         originCodeMutable.value = stationCode
@@ -59,13 +71,15 @@ class SearchFormViewModel : ViewModel() {
         }
     }
 
-    private fun calculateCanTriggerSearch() = originCode.value != null
+    private fun calculateCanTriggerSearch() = isSearchDataValid()
+
+    private fun isSearchDataValid() = originCode.value != null
             && destinationCode.value != null
             && isDateValid()
             && isPassengerCountValid()
 
     // TODO do it properly (every validation here is a joke) 🙃
-    private fun isDateValid() = flightDateMutable.value?.matches(Regex("^\\d{8}\$")) ?: false
+    private fun isDateValid() = flightDateMutable.value?.matches(Regex("^\\d{4}-\\d{2}-\\d{2}\$")) ?: false
 
     private fun isPassengerCountValid() = adultsCountMutable.value?.toInt()
             ?.plus(teensCountMutable.value?.toInt() ?: 0)

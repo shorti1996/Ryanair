@@ -3,19 +3,20 @@ package com.wojciszke.ryanair.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.wojciszke.ryanair.data.model.app.SearchFormData
 
-class MainViewModel: ViewModel() {
+class MainViewModel : ViewModel() {
     private val currentScreenMutable = MutableLiveData<CurrentScreen>().apply {
-        value = CurrentScreen.SEARCH_FORM
+        value = SearchForm
     }
     val currentScreen: LiveData<CurrentScreen> = currentScreenMutable
 
-    fun onCurrentScreenChanged(newScreen: CurrentScreen){
+    fun onCurrentScreenChanged(newScreen: CurrentScreen) {
         currentScreenMutable.value = newScreen
     }
 }
 
-enum class CurrentScreen {
-    SEARCH_FORM,
-    SEARCH_RESULTS
-}
+sealed class CurrentScreen
+object SearchForm : CurrentScreen()
+class SearchResults(val searchFormData: SearchFormData) : CurrentScreen()
+class FlightDetails(val flightKey: String) : CurrentScreen()
