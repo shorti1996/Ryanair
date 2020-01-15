@@ -27,14 +27,20 @@ class SearchResultsViewModel(private val flightsRepository: FlightsRepository) :
     private val focusedFlightMutable = MutableLiveData<SearchResult>()
     val focusedFlight: LiveData<SearchResult> = focusedFlightMutable
 
-    fun onSearchFormChanged(searchFormData: SearchFormData) = ioScope.launch {
-        availabilityMutable.postValue(flightsRepository.getFlights(
-                searchFormData.origin,
-                searchFormData.destination,
-                searchFormData.dateOut,
-                searchFormData.adults,
-                searchFormData.teens,
-                searchFormData.children))
+    fun onSearchFormChanged(searchFormData: SearchFormData?) {
+        if (searchFormData != null) {
+            ioScope.launch {
+                availabilityMutable.postValue(flightsRepository.getFlights(
+                        searchFormData.origin,
+                        searchFormData.destination,
+                        searchFormData.dateOut,
+                        searchFormData.adults,
+                        searchFormData.teens,
+                        searchFormData.children))
+            }
+        } else {
+            availabilityMutable.value = null
+        }
     }
 
     fun onFocusedFlightChanged(searchResult: SearchResult) {

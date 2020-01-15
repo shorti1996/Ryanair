@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
             replace(R.id.main_activity_root,
                     findFragmentByTag(SearchResultsFragment.TAG) ?: SearchResultsFragment(),
                     SearchResultsFragment.TAG)
+            addToBackStack(null)
         }
     }
 
@@ -52,6 +53,7 @@ class MainActivity : AppCompatActivity() {
             replace(R.id.main_activity_root,
                     findFragmentByTag(FlightDetailsFragment.TAG) ?: FlightDetailsFragment(),
                     FlightDetailsFragment.TAG)
+            addToBackStack(null)
         }
     }
 }

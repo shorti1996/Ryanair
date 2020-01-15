@@ -52,14 +52,14 @@ class SearchResultsFragment : Fragment() {
             it?.let { searchResultsViewModel.onSearchFormChanged(searchFormViewModel.searchFormData.value!!) }
         }
         searchResultsViewModel = ViewModelProviders.of(activity!!, SearchResultsViewModelFactory(flightsRepository))[SearchResultsViewModel::class.java]
-        searchResultsViewModel.availability.observe(this) {
-            it?.trips?.forEach { trip ->
-                Log.e("FLIGHTS", trip.toString())
-            }
-        }
         searchResultsViewModel.searchResults.observe(this) {
             searchResultAdapter.setData(it)
         }
+    }
+
+    override fun onDetach() {
+        searchResultsViewModel.onSearchFormChanged(null)
+        super.onDetach()
     }
 
     private fun onSearchItemClicked(searchResult: SearchResult) {
