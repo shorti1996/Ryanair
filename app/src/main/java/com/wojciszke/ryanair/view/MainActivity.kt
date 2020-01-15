@@ -1,10 +1,5 @@
 package com.wojciszke.ryanair.view
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.Network
-import android.net.NetworkInfo
-import android.net.NetworkRequest
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
@@ -17,6 +12,7 @@ import com.wojciszke.ryanair.view.flightdetails.FlightDetailsFragment
 import com.wojciszke.ryanair.view.searchform.SearchFormFragment
 import com.wojciszke.ryanair.view.searchresult.SearchResultsFragment
 import com.wojciszke.ryanair.viewmodel.*
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainViewModel
@@ -36,6 +32,8 @@ class MainActivity : AppCompatActivity() {
                 is FlightDetails -> showFlightDetails(screen.searchResult)
             }
         }
+
+        setupChildFragmentPopListener()
     }
 
     private fun showSearchForm() = supportFragmentManager.apply {
@@ -44,6 +42,7 @@ class MainActivity : AppCompatActivity() {
                     findFragmentByTag(SearchFormFragment.TAG) ?: SearchFormFragment(),
                     SearchFormFragment.TAG)
         }
+        setActionBarTitle(null)
     }
 
     private fun showSearchResults(searchFormData: SearchFormData) = supportFragmentManager.apply {
@@ -53,6 +52,7 @@ class MainActivity : AppCompatActivity() {
                     SearchResultsFragment.TAG)
             addToBackStack(null)
         }
+        setActionBarTitle("${searchFormData.origin} -> ${searchFormData.destination}")
     }
 
     private fun showFlightDetails(searchResult: SearchResult) = supportFragmentManager.apply {
@@ -61,6 +61,17 @@ class MainActivity : AppCompatActivity() {
                     findFragmentByTag(FlightDetailsFragment.TAG) ?: FlightDetailsFragment.newInstance(searchResult),
                     FlightDetailsFragment.TAG)
             addToBackStack(null)
+        }
+    }
+
+    private fun setActionBarTitle(title: String?) {
+        if (title == null) setTitle(getString(R.string.app_name))
+        else setTitle(title)
+    }
+
+    private fun setupChildFragmentPopListener() {
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount == 0) setActionBarTitle(null)
         }
     }
 }
