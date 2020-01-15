@@ -1,7 +1,10 @@
 package com.wojciszke.ryanair.data.model.app
 
+import android.os.Parcelable
 import com.wojciszke.ryanair.data.model.flights.FlightsAvailability
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class SearchResult(
         val flightKey: String,
         val flightDate: String,
@@ -14,7 +17,7 @@ data class SearchResult(
         val infantsLeft: Int,
         val fareClass: String,
         val discountInPercent: Int
-)
+) : Parcelable
 
 fun fromFlights(flightsAvailability: FlightsAvailability): List<SearchResult> = flightsAvailability.let { availability ->
     availability.trips?.flatMap { trip ->

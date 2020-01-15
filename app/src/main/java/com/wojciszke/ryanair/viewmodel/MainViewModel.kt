@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.wojciszke.ryanair.data.model.app.SearchFormData
+import com.wojciszke.ryanair.data.model.app.SearchResult
 
 class MainViewModel : ViewModel() {
     private val currentScreenMutable = MutableLiveData<CurrentScreen>().apply {
@@ -19,4 +20,4 @@ class MainViewModel : ViewModel() {
 sealed class CurrentScreen
 object SearchForm : CurrentScreen()
 class SearchResults(val searchFormData: SearchFormData) : CurrentScreen()
-class FlightDetails(val flightKey: String) : CurrentScreen()
+class FlightDetails(val searchResult: SearchResult) : CurrentScreen()

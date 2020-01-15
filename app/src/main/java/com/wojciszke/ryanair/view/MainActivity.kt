@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.wojciszke.ryanair.R
+import com.wojciszke.ryanair.data.model.app.SearchFormData
+import com.wojciszke.ryanair.data.model.app.SearchResult
 import com.wojciszke.ryanair.utils.inTransaction
 import com.wojciszke.ryanair.utils.observe
 import com.wojciszke.ryanair.view.flightdetails.FlightDetailsFragment
@@ -25,8 +27,8 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.currentScreen.observe(this) { screen ->
             when (screen) {
                 is SearchForm -> showSearchForm()
-                is SearchResults -> showSearchResults()
-                is FlightDetails -> showFlightDetails()
+                is SearchResults -> showSearchResults(screen.searchFormData)
+                is FlightDetails -> showFlightDetails(screen.searchResult)
             }
         }
     }
@@ -39,19 +41,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showSearchResults() = supportFragmentManager.apply {
+    private fun showSearchResults(searchFormData: SearchFormData) = supportFragmentManager.apply {
         inTransaction {
             replace(R.id.main_activity_root,
-                    findFragmentByTag(SearchResultsFragment.TAG) ?: SearchResultsFragment(),
+                    findFragmentByTag(SearchResultsFragment.TAG) ?: SearchResultsFragment.newInstance(searchFormData),
                     SearchResultsFragment.TAG)
             addToBackStack(null)
         }
     }
 
-    private fun showFlightDetails() = supportFragmentManager.apply {
+    private fun showFlightDetails(searchResult: SearchResult) = supportFragmentManager.apply {
         inTransaction {
             replace(R.id.main_activity_root,
-                    findFragmentByTag(FlightDetailsFragment.TAG) ?: FlightDetailsFragment(),
+                    findFragmentByTag(FlightDetailsFragment.TAG) ?: FlightDetailsFragment.newInstance(searchResult),
                     FlightDetailsFragment.TAG)
             addToBackStack(null)
         }

@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wojciszke.ryanair.R
 import com.wojciszke.ryanair.data.FlightsRepository
+import com.wojciszke.ryanair.data.model.app.SearchFormData
 import com.wojciszke.ryanair.data.model.app.SearchResult
 import com.wojciszke.ryanair.di.component.DaggerSearchFlightsComponent
 import com.wojciszke.ryanair.utils.observe
@@ -23,7 +24,6 @@ class SearchResultsFragment : Fragment() {
     lateinit var flightsRepository: FlightsRepository
 
     private val mainViewModel: MainViewModel by lazy { ViewModelProviders.of(activity!!)[MainViewModel::class.java] }
-    private lateinit var searchFormViewModel: SearchFormViewModel
     private lateinit var searchResultsViewModel: SearchResultsViewModel
 
     private val searchResultAdapter by lazy { SearchResultAdapter(::onSearchItemClicked) }
@@ -47,14 +47,11 @@ class SearchResultsFragment : Fragment() {
     }
 
     private fun prepareViewModels() {
-        searchFormViewModel = ViewModelProviders.of(activity!!)[SearchFormViewModel::class.java]
-        searchFormViewModel.canTriggerSearch.observe(this) {
-            it?.let { searchResultsViewModel.onSearchFormChanged(searchFormViewModel.searchFormData.value!!) }
-        }
         searchResultsViewModel = ViewModelProviders.of(activity!!, SearchResultsViewModelFactory(flightsRepository))[SearchResultsViewModel::class.java]
         searchResultsViewModel.searchResults.observe(this) {
             searchResultAdapter.setData(it)
         }
+        searchResultsViewModel.onSearchFormChanged(arguments?.getParcelable(SEARCH_FORM_DATA_KEY))
     }
 
     override fun onDetach() {
@@ -63,11 +60,19 @@ class SearchResultsFragment : Fragment() {
     }
 
     private fun onSearchItemClicked(searchResult: SearchResult) {
-        mainViewModel.onCurrentScreenChanged(FlightDetails(searchResult.flightKey))
+        mainViewModel.onCurrentScreenChanged(FlightDetails(searchResult))
         searchResultsViewModel.onFocusedFlightChanged(searchResult)
     }
 
     companion object {
         const val TAG = "search-results-fragment-tag"
+
+        private const val SEARCH_FORM_DATA_KEY = "search-form-data-key"
+
+        fun newInstance(searchFormData: SearchFormData) = SearchResultsFragment().apply {
+            arguments = Bundle().apply {
+                this.putParcelable(SEARCH_FORM_DATA_KEY, searchFormData)
+            }
+        }
     }
 }
