@@ -1,14 +1,12 @@
 package com.wojciszke.ryanair.viewmodel
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.wojciszke.core.model.flights.FlightsAvailability
 import com.wojciszke.ryanair.model.SearchFormData
 import com.wojciszke.ryanair.model.SearchResult
-import com.wojciszke.ryanair.model.fromFlights
+import com.wojciszke.ryanair.model.fromAvailability
 import com.wojciszke.ryanair.repository.FlightsRepository
+import com.wojciszke.ryanair.utils.ViewModelExtensions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -22,10 +20,6 @@ class SearchResultsViewModel(private val flightsRepository: FlightsRepository) :
 
     private val availabilityMutable = MutableLiveData<FlightsAvailability?>()
 
-    val searchResults = Transformations.map(availabilityMutable) {
-        it?.let { fromFlights(it) }
-    }
-
     private val focusedFlightMutable = MutableLiveData<SearchResult>()
 
     val originName = Transformations.map(focusedFlightMutable) {
@@ -35,6 +29,15 @@ class SearchResultsViewModel(private val flightsRepository: FlightsRepository) :
     val destinationName = Transformations.map(focusedFlightMutable) {
         it?.destinationName
     }
+
+    private val maxPriceMutable = MutableLiveData<Int>()
+//    val maxPrice: LiveData<Int> = MutableLiveData<Int>()
+
+    val searchResults = ViewModelExtensions.createMediatorLiveDataForSources(
+            availabilityMutable,
+            maxPriceMutable,
+            calculate = ::calculateSearchResultsToShow
+    )
 
     fun onSearchFormChanged(searchFormData: SearchFormData?) {
         if (searchFormData != null) {
@@ -55,6 +58,17 @@ class SearchResultsViewModel(private val flightsRepository: FlightsRepository) :
     fun onFocusedFlightChanged(searchResult: SearchResult?) {
         focusedFlightMutable.value = searchResult
     }
+
+    fun onMaxPriceChanged(newPrice: Int) {
+        maxPriceMutable.value = newPrice
+    }
+
+    private fun calculateSearchResultsToShow(): List<SearchResult> =
+            availabilityMutable.value?.let { flightsAvailability ->
+                fromAvailability(flightsAvailability).filter { searchResult ->
+                    searchResult.regularFarePrice <= maxPriceMutable.value ?: Int.MAX_VALUE // TODO yeah, it's ugly but it's 23:54
+                }
+            } ?: listOf()
 
     override fun onCleared() {
         super.onCleared()

@@ -21,7 +21,7 @@ data class SearchResult(
         val destinationName: String
 ) : Parcelable
 
-fun fromFlights(flightsAvailability: FlightsAvailability): List<SearchResult> = flightsAvailability.let { availability ->
+fun fromAvailability(flightsAvailability: FlightsAvailability): List<SearchResult> = flightsAvailability.let { availability ->
     availability.trips?.flatMap { trip ->
         trip.dates?.flatMap { date ->
             date.flights?.flatMap { flight ->

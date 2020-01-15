@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showSearchForm() = supportFragmentManager.apply {
         inTransaction {
-            replace(R.id.main_activity_root,
+            replace(R.id.main_activity_fragment_frame,
                     findFragmentByTag(SearchFormFragment.TAG) ?: SearchFormFragment(),
                     SearchFormFragment.TAG)
         }
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showSearchResults(searchFormData: SearchFormData) = supportFragmentManager.apply {
         inTransaction {
-            replace(R.id.main_activity_root,
+            replace(R.id.main_activity_fragment_frame,
                     findFragmentByTag(SearchResultsFragment.TAG) ?: SearchResultsFragment.newInstance(searchFormData),
                     SearchResultsFragment.TAG)
             addToBackStack(null)
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showFlightDetails(searchResult: SearchResult) = supportFragmentManager.apply {
         inTransaction {
-            replace(R.id.main_activity_root,
+            replace(R.id.main_activity_fragment_frame,
                     findFragmentByTag(FlightDetailsFragment.TAG) ?: FlightDetailsFragment.newInstance(searchResult),
                     FlightDetailsFragment.TAG)
             addToBackStack(null)
