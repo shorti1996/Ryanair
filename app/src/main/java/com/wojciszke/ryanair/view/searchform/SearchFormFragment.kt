@@ -53,7 +53,7 @@ class SearchFormFragment : Fragment() {
         prepareViewModels()
         prepareAutocompleteTextViews()
         requireContext().registerOnNetworkAvailableCallback {
-            stationsViewModel.reloadStations()
+            stationsViewModel.fetchStations()
         }?.let { networkCallback = it }
     }
 

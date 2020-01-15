@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.wojciszke.core.model.stations.Stations
 import com.wojciszke.networking.NetworkFail
 import com.wojciszke.networking.NetworkSuccess
 import com.wojciszke.ryanair.repository.StationsRepository
@@ -21,20 +22,20 @@ class StationsViewModel(private val stationsRepository: StationsRepository) : Vi
     private val viewModelJob = SupervisorJob()
     private val ioScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
-    private val stationsMutable: MutableLiveData<com.wojciszke.core.model.stations.Stations?> = MutableLiveData<com.wojciszke.core.model.stations.Stations?>().apply {
-        reloadStations()
+    private val stationsMutable: MutableLiveData<Stations?> = MutableLiveData<Stations?>().apply {
+        fetchStations()
     }
 
-    fun reloadStations() {
+    fun fetchStations() {
         ioScope.launch {
             when (val result = stationsRepository.getStations()) {
-                is NetworkSuccess<*> -> stationsMutable.postValue(result.obj as com.wojciszke.core.model.stations.Stations?)
+                is NetworkSuccess<*> -> stationsMutable.postValue(result.obj as Stations?)
                 is NetworkFail -> Log.e(NETWORKING_LOG_TAG, result.message)
             }
         }
     }
 
-    val stations: LiveData<com.wojciszke.core.model.stations.Stations?> = stationsMutable
+    val stations: LiveData<Stations?> = stationsMutable
 
     override fun onCleared() {
         super.onCleared()

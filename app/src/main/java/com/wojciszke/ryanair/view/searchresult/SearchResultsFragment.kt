@@ -53,6 +53,12 @@ class SearchResultsFragment : Fragment() {
         prepareViews()
     }
 
+    override fun onDetach() {
+        searchResultsViewModel.onSearchFormChanged(null)
+        setActionBarTitle(null)
+        super.onDetach()
+    }
+
     private fun prepareViews() {
         with(recycler_view_search_results) {
             layoutManager = LinearLayoutManager(requireContext())
@@ -67,12 +73,6 @@ class SearchResultsFragment : Fragment() {
 
     private fun setMaxPrice(maxPrice: Int) {
         searchResultsViewModel.onMaxPriceChanged(maxPrice)
-    }
-
-    override fun onDetach() {
-        searchResultsViewModel.onSearchFormChanged(null)
-        setActionBarTitle(null)
-        super.onDetach()
     }
 
     private fun onSearchItemClicked(searchResult: SearchResult) {

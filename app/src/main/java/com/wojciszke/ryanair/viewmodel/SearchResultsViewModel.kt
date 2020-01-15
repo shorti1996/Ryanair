@@ -31,7 +31,6 @@ class SearchResultsViewModel(private val flightsRepository: FlightsRepository) :
     }
 
     private val maxPriceMutable = MutableLiveData<Int>()
-//    val maxPrice: LiveData<Int> = MutableLiveData<Int>()
 
     val searchResults = ViewModelExtensions.createMediatorLiveDataForSources(
             availabilityMutable,
