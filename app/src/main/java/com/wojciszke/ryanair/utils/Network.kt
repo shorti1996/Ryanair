@@ -4,11 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
-import android.util.Log
 
-sealed class NetworkResult
-class NetworkFail(val message: String) : NetworkResult()
-class NetworkSuccess<T>(val obj: T) : NetworkResult()
 
 const val NETWORKING_TAG = "networking"
 

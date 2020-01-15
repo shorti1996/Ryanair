@@ -37,6 +37,7 @@ android {
 
 dependencies {
     implementation project(':core')
+    implementation project(':networking')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -59,7 +60,6 @@ dependencies {
     //    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     // Retrofit2
-    def retrofit_version = "2.7.1"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     // OKHttp3

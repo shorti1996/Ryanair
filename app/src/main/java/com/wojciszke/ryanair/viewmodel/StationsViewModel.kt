@@ -1,12 +1,14 @@
 package com.wojciszke.ryanair.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.*
-import com.wojciszke.ryanair.networking.StationsRepository
-import com.wojciszke.core.model.stations.Stations
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.wojciszke.networking.NetworkFail
+import com.wojciszke.networking.NetworkSuccess
+import com.wojciszke.ryanair.repository.StationsRepository
 import com.wojciszke.ryanair.utils.NETWORKING_TAG
-import com.wojciszke.ryanair.utils.NetworkFail
-import com.wojciszke.ryanair.utils.NetworkSuccess
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

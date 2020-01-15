@@ -15,7 +15,7 @@ import com.wojciszke.ryanair.R
 import com.wojciszke.ryanair.model.StationAutocomplete
 import com.wojciszke.ryanair.model.toStationAutocomplete
 import com.wojciszke.ryanair.di.component.DaggerSearchFlightsComponent
-import com.wojciszke.ryanair.networking.StationsRepository
+import com.wojciszke.ryanair.repository.StationsRepository
 import com.wojciszke.ryanair.utils.observe
 import com.wojciszke.ryanair.utils.registerOnNetworkAvailableCallback
 import com.wojciszke.ryanair.utils.unregisterOnNetworkAvailableCallback

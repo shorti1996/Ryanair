@@ -36,6 +36,17 @@ class MainActivity : AppCompatActivity() {
         setupChildFragmentPopListener()
     }
 
+    private fun setActionBarTitle(title: String?) {
+        if (title == null) setTitle(getString(R.string.app_name))
+        else setTitle(title)
+    }
+
+    private fun setupChildFragmentPopListener() {
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount == 0) setActionBarTitle(null)
+        }
+    }
+
     private fun showSearchForm() = supportFragmentManager.apply {
         inTransaction {
             replace(R.id.main_activity_root,
@@ -61,17 +72,6 @@ class MainActivity : AppCompatActivity() {
                     findFragmentByTag(FlightDetailsFragment.TAG) ?: FlightDetailsFragment.newInstance(searchResult),
                     FlightDetailsFragment.TAG)
             addToBackStack(null)
-        }
-    }
-
-    private fun setActionBarTitle(title: String?) {
-        if (title == null) setTitle(getString(R.string.app_name))
-        else setTitle(title)
-    }
-
-    private fun setupChildFragmentPopListener() {
-        supportFragmentManager.addOnBackStackChangedListener {
-            if (supportFragmentManager.backStackEntryCount == 0) setActionBarTitle(null)
         }
     }
 }

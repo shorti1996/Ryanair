@@ -1,7 +1,7 @@
 package com.wojciszke.ryanair.viewmodel
 
 import androidx.lifecycle.*
-import com.wojciszke.ryanair.networking.FlightsRepository
+import com.wojciszke.ryanair.repository.FlightsRepository
 import com.wojciszke.ryanair.model.SearchFormData
 import com.wojciszke.ryanair.model.SearchResult
 import com.wojciszke.ryanair.model.fromFlights

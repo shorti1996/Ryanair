@@ -2,19 +2,22 @@ package com.wojciszke.ryanair.view.searchresult
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wojciszke.ryanair.R
-import com.wojciszke.ryanair.networking.FlightsRepository
+import com.wojciszke.ryanair.di.component.DaggerSearchFlightsComponent
 import com.wojciszke.ryanair.model.SearchFormData
 import com.wojciszke.ryanair.model.SearchResult
-import com.wojciszke.ryanair.di.component.DaggerSearchFlightsComponent
+import com.wojciszke.ryanair.repository.FlightsRepository
 import com.wojciszke.ryanair.utils.observe
-import com.wojciszke.ryanair.viewmodel.*
+import com.wojciszke.ryanair.viewmodel.FlightDetails
+import com.wojciszke.ryanair.viewmodel.MainViewModel
+import com.wojciszke.ryanair.viewmodel.SearchResultsViewModel
+import com.wojciszke.ryanair.viewmodel.SearchResultsViewModelFactory
 import kotlinx.android.synthetic.main.fragment_search_results.*
 import javax.inject.Inject
 
