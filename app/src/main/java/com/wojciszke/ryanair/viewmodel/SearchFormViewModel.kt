@@ -2,7 +2,7 @@ package com.wojciszke.ryanair.viewmodel
 
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.*
-import com.wojciszke.ryanair.data.model.app.SearchFormData
+import com.wojciszke.ryanair.model.SearchFormData
 import com.wojciszke.ryanair.utils.ViewModelExtensions
 
 class SearchFormViewModel : ViewModel() {
@@ -31,12 +31,12 @@ class SearchFormViewModel : ViewModel() {
     val searchFormData: LiveData<SearchFormData?> = Transformations.map(canTriggerSearch) {
         if (it == true) {
             SearchFormData(
-                    originCode.value ?: "",
-                    destinationCode.value ?: "",
-                    flightDateMutable.value ?: "",
-                    adultsCountMutable.value?.toInt() ?: 0,
-                    teensCountMutable.value?.toInt() ?: 0,
-                    childrenCountMutable.value?.toInt() ?: 0
+                originCode.value ?: "",
+                destinationCode.value ?: "",
+                flightDateMutable.value ?: "",
+                adultsCountMutable.value?.toInt() ?: 0,
+                teensCountMutable.value?.toInt() ?: 0,
+                childrenCountMutable.value?.toInt() ?: 0
             )
         } else null
     }

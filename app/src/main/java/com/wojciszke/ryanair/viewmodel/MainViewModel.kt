@@ -3,8 +3,8 @@ package com.wojciszke.ryanair.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.wojciszke.ryanair.data.model.app.SearchFormData
-import com.wojciszke.ryanair.data.model.app.SearchResult
+import com.wojciszke.ryanair.model.SearchFormData
+import com.wojciszke.ryanair.model.SearchResult
 
 class MainViewModel : ViewModel() {
     private val currentScreenMutable = MutableLiveData<CurrentScreen>().apply {

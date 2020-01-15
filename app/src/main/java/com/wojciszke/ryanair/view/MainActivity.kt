@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.wojciszke.ryanair.R
-import com.wojciszke.ryanair.data.model.app.SearchFormData
-import com.wojciszke.ryanair.data.model.app.SearchResult
+import com.wojciszke.ryanair.model.SearchFormData
+import com.wojciszke.ryanair.model.SearchResult
 import com.wojciszke.ryanair.utils.inTransaction
 import com.wojciszke.ryanair.utils.observe
 import com.wojciszke.ryanair.view.flightdetails.FlightDetailsFragment

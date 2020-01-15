@@ -1,6 +1,6 @@
 package com.wojciszke.ryanair.networking
 
-import com.wojciszke.ryanair.data.model.flights.FlightsAvailability
+import com.wojciszke.core.model.flights.FlightsAvailability
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -15,7 +15,7 @@ interface FlightsApi {
         @Query("chd") children: Int,
         @Query("roundtrip") roundTrip: Boolean = true,
         @Query("ToUs") toUs: String = "AGREED"
-    ): FlightsAvailability
+    ): com.wojciszke.core.model.flights.FlightsAvailability
 
 //    @GET("Availability")
 //    fun getFlights2(

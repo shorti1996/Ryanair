@@ -36,6 +36,8 @@ android {
 }
 
 dependencies {
+    implementation project(':core')
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -62,8 +64,6 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     // OKHttp3
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
-    // GSon
-    implementation "com.google.code.gson:gson:2.8.6"
 
     // Dagger2
     def dagger2_version = '2.25.4'

@@ -1,47 +1,47 @@
-package com.wojciszke.ryanair.data.model.flights
+package com.wojciszke.core.model.flights
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
 data class Flight(
-        @SerializedName("faresLeft")
+    @SerializedName("faresLeft")
         @Expose
         val faresLeft: Int? = null,
 
-        @SerializedName("flightKey")
+    @SerializedName("flightKey")
         @Expose
         val flightKey: String? = null,
 
-        @SerializedName("infantsLeft")
+    @SerializedName("infantsLeft")
         @Expose
         val infantsLeft: Int? = null,
 
-        @SerializedName("regularFare")
+    @SerializedName("regularFare")
         @Expose
         val regularFare: RegularFare? = null,
 
-        @SerializedName("operatedBy")
+    @SerializedName("operatedBy")
         @Expose
         val operatedBy: String? = null,
 
-        @SerializedName("segments")
+    @SerializedName("segments")
         @Expose
         val segments: List<Segment>? = null,
 
-        @SerializedName("flightNumber")
+    @SerializedName("flightNumber")
         @Expose
         val flightNumber: String? = null,
 
-        @SerializedName("time")
+    @SerializedName("time")
         @Expose
         val time: List<String>? = null,
 
-        @SerializedName("timeUTC")
+    @SerializedName("timeUTC")
         @Expose
         val timeUTC: List<String>? = null,
 
-        @SerializedName("duration")
+    @SerializedName("duration")
         @Expose
         val duration: String? = null
 )

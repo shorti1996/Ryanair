@@ -1,4 +1,4 @@
-package com.wojciszke.ryanair.data.model.flights
+package com.wojciszke.core.model.flights
 
 import com.google.gson.annotations.Expose
 

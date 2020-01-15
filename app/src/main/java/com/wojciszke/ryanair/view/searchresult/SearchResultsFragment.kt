@@ -10,8 +10,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wojciszke.ryanair.R
 import com.wojciszke.ryanair.networking.FlightsRepository
-import com.wojciszke.ryanair.data.model.app.SearchFormData
-import com.wojciszke.ryanair.data.model.app.SearchResult
+import com.wojciszke.ryanair.model.SearchFormData
+import com.wojciszke.ryanair.model.SearchResult
 import com.wojciszke.ryanair.di.component.DaggerSearchFlightsComponent
 import com.wojciszke.ryanair.utils.observe
 import com.wojciszke.ryanair.viewmodel.*

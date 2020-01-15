@@ -1,4 +1,4 @@
-package com.wojciszke.ryanair.data.model.app
+package com.wojciszke.ryanair.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

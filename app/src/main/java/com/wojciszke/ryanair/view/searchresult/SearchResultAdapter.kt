@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.wojciszke.ryanair.R
-import com.wojciszke.ryanair.data.model.app.SearchResult
+import com.wojciszke.ryanair.model.SearchResult
 import kotlinx.android.synthetic.main.flights_list_view_holder.view.*
 
 class SearchResultAdapter(val onItemClickCallback: (SearchResult) -> Unit) : RecyclerView.Adapter<SearchResultAdapter.FlightsListViewHolder>() {

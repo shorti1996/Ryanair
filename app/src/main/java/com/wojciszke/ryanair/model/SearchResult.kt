@@ -1,7 +1,7 @@
-package com.wojciszke.ryanair.data.model.app
+package com.wojciszke.ryanair.model
 
 import android.os.Parcelable
-import com.wojciszke.ryanair.data.model.flights.FlightsAvailability
+import com.wojciszke.core.model.flights.FlightsAvailability
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -26,17 +26,17 @@ fun fromFlights(flightsAvailability: FlightsAvailability): List<SearchResult> = 
                 flight.regularFare?.let { regularFare ->
                     regularFare.fares?.map { fare ->
                         SearchResult(
-                                flight.flightKey ?: "",
-                                date.dateOut ?: "",
-                                flight.flightNumber ?: "",
-                                flight.duration ?: "",
-                                fare.amount ?: -1.0,
-                                availability.currency ?: "",
-                                trip.origin ?: "",
-                                trip.destination ?: "",
-                                flight.infantsLeft ?: -1,
-                                regularFare.fareClass ?: "",
-                                fare.discountInPercent ?: 0
+                            flight.flightKey ?: "",
+                            date.dateOut ?: "",
+                            flight.flightNumber ?: "",
+                            flight.duration ?: "",
+                            fare.amount ?: -1.0,
+                            availability.currency ?: "",
+                            trip.origin ?: "",
+                            trip.destination ?: "",
+                            flight.infantsLeft ?: -1,
+                            regularFare.fareClass ?: "",
+                            fare.discountInPercent ?: 0
                         )
                     } ?: listOf()
                 } ?: listOf()

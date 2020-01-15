@@ -2,10 +2,9 @@ package com.wojciszke.ryanair.viewmodel
 
 import androidx.lifecycle.*
 import com.wojciszke.ryanair.networking.FlightsRepository
-import com.wojciszke.ryanair.data.model.app.SearchFormData
-import com.wojciszke.ryanair.data.model.app.SearchResult
-import com.wojciszke.ryanair.data.model.app.fromFlights
-import com.wojciszke.ryanair.data.model.flights.FlightsAvailability
+import com.wojciszke.ryanair.model.SearchFormData
+import com.wojciszke.ryanair.model.SearchResult
+import com.wojciszke.ryanair.model.fromFlights
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -17,7 +16,7 @@ class SearchResultsViewModel(private val flightsRepository: FlightsRepository) :
     private val viewModelJob = SupervisorJob()
     private val ioScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
-    private val availabilityMutable = MutableLiveData<FlightsAvailability?>()
+    private val availabilityMutable = MutableLiveData<com.wojciszke.core.model.flights.FlightsAvailability?>()
 
     val searchResults = Transformations.map(availabilityMutable) {
         it?.let { fromFlights(it) }

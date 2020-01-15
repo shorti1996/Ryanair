@@ -12,9 +12,8 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.wojciszke.ryanair.R
-import com.wojciszke.ryanair.data.model.app.StationAutocomplete
-import com.wojciszke.ryanair.data.model.app.toStationAutocomplete
-import com.wojciszke.ryanair.data.model.stations.Stations
+import com.wojciszke.ryanair.model.StationAutocomplete
+import com.wojciszke.ryanair.model.toStationAutocomplete
 import com.wojciszke.ryanair.di.component.DaggerSearchFlightsComponent
 import com.wojciszke.ryanair.networking.StationsRepository
 import com.wojciszke.ryanair.utils.observe
@@ -80,7 +79,7 @@ class SearchFormFragment : Fragment() {
 
     }
 
-    private fun onStationsChanged(stations: Stations?) {
+    private fun onStationsChanged(stations: com.wojciszke.core.model.stations.Stations?) {
         stations?.stations?.map { it.toStationAutocomplete() }?.let { autocompleteItems ->
             multiAutocomplete.forEach { adapter ->
                 adapter.clear()
