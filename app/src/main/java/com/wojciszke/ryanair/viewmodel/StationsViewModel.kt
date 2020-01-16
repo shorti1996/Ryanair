@@ -14,8 +14,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class StationsViewModel(private val stationsRepository: StationsRepository) : ViewModel() {
+class StationsViewModel @Inject constructor(private val stationsRepository: StationsRepository) : ViewModel() {
 
     // could be replaced with viewModelScope from androidx.lifecycle:*:2.2.0-alpha01
     // so I'm not extracting it to some common place

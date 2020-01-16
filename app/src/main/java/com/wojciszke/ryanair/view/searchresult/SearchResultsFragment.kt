@@ -5,37 +5,38 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wojciszke.ryanair.R
-import com.wojciszke.ryanair.di.component.DaggerSearchFlightsComponent
+import com.wojciszke.ryanair.RyanairApplication
+import com.wojciszke.ryanair.di.component.DaggerFlightsAvailabilityComponent
+import com.wojciszke.ryanair.di.component.DaggerRyanairRepositoryComponent
 import com.wojciszke.ryanair.model.SearchFormData
 import com.wojciszke.ryanair.model.SearchResult
 import com.wojciszke.ryanair.repository.FlightsRepository
 import com.wojciszke.ryanair.utils.observe
 import com.wojciszke.ryanair.utils.setActionBarTitleOrDefault
-import com.wojciszke.ryanair.viewmodel.FlightDetails
-import com.wojciszke.ryanair.viewmodel.MainViewModel
-import com.wojciszke.ryanair.viewmodel.SearchResultsViewModel
-import com.wojciszke.ryanair.viewmodel.SearchResultsViewModelFactory
+import com.wojciszke.ryanair.viewmodel.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_search_results.*
 import javax.inject.Inject
 
 class SearchResultsFragment : Fragment() {
     @Inject
-    lateinit var flightsRepository: FlightsRepository
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val mainViewModel: MainViewModel by lazy { ViewModelProviders.of(activity!!)[MainViewModel::class.java] }
-    private lateinit var searchResultsViewModel: SearchResultsViewModel
+    private val searchResultsViewModel: SearchResultsViewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[SearchResultsViewModel::class.java]  }
 
     private val searchResultAdapter by lazy { SearchResultAdapter(::onSearchItemClicked) }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        DaggerSearchFlightsComponent.create().inject(this)
+        DaggerFlightsAvailabilityComponent.builder().ryanairRepositoryComponent(
+                (requireActivity().application as RyanairApplication).ryanairRepositoryComponent
+        ).build().inject(this)
     }
 
     override fun onResume() {
@@ -81,7 +82,6 @@ class SearchResultsFragment : Fragment() {
     }
 
     private fun prepareViewModels() {
-        searchResultsViewModel = ViewModelProviders.of(activity!!, SearchResultsViewModelFactory(flightsRepository))[SearchResultsViewModel::class.java]
         with(searchResultsViewModel) {
             searchResults.observe(this@SearchResultsFragment) {
                 updateProgressBar(it)

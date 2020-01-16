@@ -1,5 +1,6 @@
 package com.wojciszke.ryanair.view.searchform
 
+import android.app.Application
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
@@ -10,12 +11,13 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.wojciszke.ryanair.R
+import com.wojciszke.ryanair.RyanairApplication
 import com.wojciszke.ryanair.model.StationAutocomplete
 import com.wojciszke.ryanair.model.toStationAutocomplete
-import com.wojciszke.ryanair.di.component.DaggerSearchFlightsComponent
-import com.wojciszke.ryanair.repository.StationsRepository
+import com.wojciszke.ryanair.di.component.DaggerStationsComponent
 import com.wojciszke.ryanair.utils.observe
 import com.wojciszke.ryanair.utils.registerOnNetworkAvailableCallback
 import com.wojciszke.ryanair.utils.unregisterOnNetworkAvailableCallback
@@ -26,11 +28,11 @@ import javax.inject.Inject
 
 class SearchFormFragment : Fragment() {
     @Inject
-    lateinit var stationsRepository: StationsRepository
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val mainViewModel: MainViewModel by lazy { ViewModelProviders.of(activity!!)[MainViewModel::class.java] }
-    private lateinit var stationsViewModel: StationsViewModel
-    private lateinit var searchFormViewModel: SearchFormViewModel
+    private val stationsViewModel: StationsViewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[StationsViewModel::class.java] }
+    private val searchFormViewModel: SearchFormViewModel by lazy { ViewModelProviders.of(activity!!)[SearchFormViewModel::class.java] }
 
     private val autocompleteOriginAdapter by lazy { createEmptyArrayAdapter() }
     private val autocompleteDestinationAdapter by lazy { createEmptyArrayAdapter() }
@@ -48,7 +50,9 @@ class SearchFormFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        DaggerSearchFlightsComponent.create().inject(this)
+        DaggerStationsComponent.builder().ryanairRepositoryComponent(
+                (requireActivity().application as RyanairApplication).ryanairRepositoryComponent
+        ).build().inject(this)
 
         prepareViewModels()
         prepareAutocompleteTextViews()
@@ -66,9 +70,6 @@ class SearchFormFragment : Fragment() {
             ArrayAdapter<StationAutocomplete>(requireContext(), android.R.layout.simple_dropdown_item_1line, mutableListOf())
 
     private fun prepareViewModels() {
-        stationsViewModel = ViewModelProviders.of(this, StationsViewModelFactory(stationsRepository))[StationsViewModel::class.java]
-        searchFormViewModel = ViewModelProviders.of(activity!!)[SearchFormViewModel::class.java]
-
         with(stationsViewModel) {
             stations.observe(this@SearchFormFragment) { stations -> onStationsChanged(stations) }
         }

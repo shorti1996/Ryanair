@@ -1,7 +1,7 @@
 package com.wojciszke.ryanair.di.module
 
 import com.wojciszke.ryanair.BuildConfig
-import com.wojciszke.networking.FlightsApi
+import com.wojciszke.networking.StationsApi
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -11,21 +11,21 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
-class FlightsModule {
+class StationsApiModule {
     @Singleton
     @Provides
     @Named(RETROFIT_NAME)
     fun provideRetrofit(gsonConverterFactory: GsonConverterFactory, okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.API_BASE_URL_FLIGHTS)
+            .baseUrl(BuildConfig.API_BASE_URL_STATIONS)
             .addConverterFactory(gsonConverterFactory)
             .client(okHttpClient)
             .build()
 
     @Singleton
     @Provides
-    fun provideFlightsApi(@Named(RETROFIT_NAME) retrofit: Retrofit): FlightsApi = retrofit.create(FlightsApi::class.java)
+    fun provideStationsApi(@Named(RETROFIT_NAME) retrofit: Retrofit): StationsApi = retrofit.create(StationsApi::class.java)
 
     companion object {
-        const val RETROFIT_NAME = "FLIGHTS_RETROFIT"
+        const val RETROFIT_NAME = "STATIONS_RETROFIT"
     }
 }
