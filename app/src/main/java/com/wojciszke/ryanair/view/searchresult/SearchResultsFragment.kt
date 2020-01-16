@@ -28,7 +28,7 @@ class SearchResultsFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val mainViewModel: MainViewModel by lazy { ViewModelProviders.of(activity!!)[MainViewModel::class.java] }
-    private val searchResultsViewModel: SearchResultsViewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[SearchResultsViewModel::class.java]  }
+    private val searchResultsViewModel: SearchResultsViewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[SearchResultsViewModel::class.java] }
 
     private val searchResultAdapter by lazy { SearchResultAdapter(::onSearchItemClicked) }
 

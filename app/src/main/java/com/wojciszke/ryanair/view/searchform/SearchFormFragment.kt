@@ -91,7 +91,6 @@ class SearchFormFragment : Fragment() {
 
     private fun onCanTriggerSearchChanged(canTriggerSearch: Boolean) {
         if (canTriggerSearch) button_search_flights.setOnClickListener {
-            Toast.makeText(requireContext(), "Searching", Toast.LENGTH_SHORT).show()
             mainViewModel.onCurrentScreenChanged(SearchResults(searchFormViewModel.searchFormData.value!!))
         }
         else button_search_flights.setOnClickListener { Toast.makeText(requireContext(), "Please, fill the form", Toast.LENGTH_SHORT).show() }

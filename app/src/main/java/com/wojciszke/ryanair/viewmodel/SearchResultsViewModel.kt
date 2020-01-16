@@ -63,12 +63,12 @@ class SearchResultsViewModel @Inject constructor(private val flightsRepository: 
         maxPriceMutable.value = newPrice
     }
 
-    private fun calculateSearchResultsToShow(): List<SearchResult> =
+    private fun calculateSearchResultsToShow(): List<SearchResult>? =
             availabilityMutable.value?.let { flightsAvailability ->
                 fromAvailability(flightsAvailability).filter { searchResult ->
                     searchResult.regularFarePrice <= maxPriceMutable.value ?: Int.MAX_VALUE // TODO yeah, it's ugly but it's 23:54
                 }
-            } ?: listOf()
+            }
 
     override fun onCleared() {
         super.onCleared()
